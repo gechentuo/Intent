@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -13,18 +14,10 @@ public class ResultActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_result);
 		Bundle bundle = getIntent().getExtras();
-		String extraText = bundle.getString("text");
-		TextView textview = (TextView) findViewById(R.id.displayintentextra);
-		textview.setText(extraText);
+		String uri = bundle.getString("uri");
+		WebView webview = (WebView)findViewById(R.id.webview);
+		webview.loadUrl(uri);
 	}
 
-	@Override
-	public void finish() {
-		Intent intent = new Intent();
-		EditText editText = (EditText)findViewById(R.id.returnValue);
-		String value = editText.getText().toString();
-		intent.putExtra("returnkey", value);
-		setResult(RESULT_OK,intent);
-		super.finish();
-	}
+	 
 }

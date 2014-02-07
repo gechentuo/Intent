@@ -1,5 +1,6 @@
 package com.example.intent_tranning;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -26,26 +27,19 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	public void onClick(View view){
-		EditText text =  (EditText)findViewById(R.id.inputforintent);
+	public void transferData(View view){
+		EditText text =  (EditText)findViewById(R.id.uri);
 		String value = text.getText().toString();
 		Intent intent = new Intent(this,ResultActivity.class);
-		intent.putExtra("text", "test");
-		//intent.putExtra("int", 5);
-		//intent.putExtra("array",new int[5]{1,2,3,4,5});
-		startActivityForResult(intent, REQUEST_CODE);
+		intent.putExtra("uri", value);
+		//startActivityForResult(intent, REQUEST_CODE);
+		startActivity(intent);
 	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) { 
-		if(resultCode==RESULT_OK && requestCode==REQUEST_CODE){
-			if(data.hasExtra("returnkey")){
-				String result = data.getExtras().getString("returnkey");
-				if(result!=null && result.length()>0){
-					Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
-				}
-			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
+	public void openBrowser(View view){
+		EditText text = (EditText)findViewById(R.id.uri);
+		String url = text.getText().toString();
+		Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+		startActivity(intent);
 	}
 }
